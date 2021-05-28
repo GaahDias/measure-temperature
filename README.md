@@ -14,5 +14,5 @@ Compiling the application
 
 Running the app
 
-> ./main.c
+> ./main
 
