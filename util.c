@@ -1,4 +1,4 @@
-#include "util.h"
+#include "include/util.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,6 +41,8 @@ char * gpm() {
       return package[i];
     }
     fclose(p);
+
+    return NULL;
   }
 
 }

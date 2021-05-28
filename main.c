@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "util.h"
+#include "include/util.h"
+#include "include/colors.h"
 
 void measureTemperature(char * argv[]) {
     FILE *fp;
@@ -10,8 +11,6 @@ void measureTemperature(char * argv[]) {
     char output[32];
     char temp[150];
     bool flag = false;
-
-    fp = popen("sensors", "r");
 
     fpath = fopen("/usr/bin/sensors", "r");
 
@@ -22,20 +21,23 @@ void measureTemperature(char * argv[]) {
         getInstall(gpm(), cmd);
         system(cmd);
         
-        sleep(3);
+        sleep(2);
         system("clear");
 
         printf("Application downloaded successfully. Running the program...\n");
         sleep(2);
 
         system(argv[0]);
-        exit(1);
+        exit(0);
     }
 
     fclose(fpath);
 
+    fp = popen("sensors", "r");
+
     while(fscanf(fp, "%s", output) == 1) {
         strcat(output, " ");
+        //printf("\n---%s", output);
 
         if(strstr(output, "Package")) {
             flag = true;
@@ -53,7 +55,8 @@ void measureTemperature(char * argv[]) {
     strtok(temp, ":");
     strcpy(temp, strtok(NULL, ":\n"));
 
-    printf("CPU Temperature:%s", temp);
+    printf(HRED);
+    printf("CPU Temperature:%s\n", temp);
 
     pclose(fp);
 
