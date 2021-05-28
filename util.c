@@ -18,6 +18,8 @@ void getInstall(char * pm, char * str) {
     }
 
     strcpy(str, install);
+
+    return 0;
 }
 
 char * gpm() {

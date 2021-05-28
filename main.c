@@ -43,7 +43,7 @@ void measureTemperature(char * argv[]) {
 
         if(flag == true) {
             if(strstr(output, "(")) {
-                flag == false;
+                flag = false;
                 break;
             }
             strcat(temp, output);
