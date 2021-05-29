@@ -41,10 +41,9 @@ char * gpm() {
       return package[i];
     }
     fclose(p);
-
-    return NULL;
   }
-
+  
+  return NULL;
 }
 
 void sleep(int sec) {
