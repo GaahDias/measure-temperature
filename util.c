@@ -22,8 +22,8 @@ void getInstall(char * pm, char * str) {
 
 char * gpm() {
   char * package[] = {
-    "apt",
     "pamac",
+    "apt",
     "pacman",
     "yum",
     "dnf" 
@@ -40,10 +40,7 @@ char * gpm() {
       fclose(p);
       return package[i];
     }
-    fclose(p);
   }
-  
-  return NULL;
 }
 
 void sleep(int sec) {
