@@ -4,6 +4,8 @@
 #include <string.h>
 #include <time.h>
 
+char* measureTemperature();
+
 void getInstall(char * pm, char * str) {
     char install[50];
 
@@ -20,7 +22,7 @@ void getInstall(char * pm, char * str) {
     strcpy(str, install);
 }
 
-char * gpm() {
+char * getPackageManager() {
   char * package[] = {
     "pamac",
     "apt",
@@ -41,6 +43,27 @@ char * gpm() {
       return package[i];
     }
   }
+}
+
+void installSensors(FILE *fpath) {
+    fpath = fopen("/usr/bin/sensors", "r");
+
+    if(fpath == NULL) {
+        char cmd[50];
+        printf("Command failed. Downloading lm-sensors.\n");
+
+        getInstall(getPackageManager(), cmd);
+        system(cmd);
+        
+        system("clear");
+        printf("Application downloaded successfully. Running the program...\n");
+        sleep(3);
+
+        measureTemperature();
+        exit(0);
+    }
+
+    fclose(fpath);
 }
 
 void sleep(int sec) {

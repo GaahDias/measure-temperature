@@ -5,36 +5,44 @@
 #include "include/util.h"
 #include "include/colors.h"
 
-void measureTemperature();
-void installSensors(FILE *fpath);
+char* measureTemperature();
+char* getTemperature(char *sensor);
+char* getHighTemperature(char *sensor);
+char* getCritTemperature(char *sensor);
 
 int main(int argc, char *argv[]) {
-    measureTemperature();
-    
+    printf("CPU Temperature:%s", getTemperature(measureTemperature()));
+
     return 0;
 }
 
-void measureTemperature() {
+//function to get the temperature (temp, high, crit) from lm-sensors. basically string treatment
+char* measureTemperature() {
+    //declaring variables
     FILE *fp;
     FILE *fpath;
     char output[32];
-    char temp[150];
+    char *temp;
     bool flag = false;
 
+    //calling installSensors function (util.c)
     installSensors(fpath);
 
+    //executing sensors, and treating string
     fp = popen("sensors", "r");
 
     while(fscanf(fp, "%s", output) == 1) {
         strcat(output, " ");
-        //printf("\n---%s", output);
 
+        //start in Package
         if(strstr(output, "Package")) {
             flag = true;
+            temp = malloc(64 * sizeof(char));
         }
 
         if(flag == true) {
-            if(strstr(output, "(")) {
+            //end in Core
+            if(strstr(output, "Core")) {
                 flag = false;
                 break;
             }
@@ -45,31 +53,40 @@ void measureTemperature() {
     strtok(temp, ":");
     strcpy(temp, strtok(NULL, ":\n"));
 
-    printf(HRED);
-    printf("CPU Temperature:%s\n", temp);
-
     pclose(fp);
 
+    return temp;
 }
 
-void installSensors(FILE *fpath) {
-    fpath = fopen("/usr/bin/sensors", "r");
+char* getTemperature(char *sensor) {
+    char *temp = malloc(32 * sizeof(char));
 
-    if(fpath == NULL) {
-        char cmd[50];
-        printf("Command failed. Downloading lm-sensors.\n");
+    strtok(sensor, "(");
+    strcpy(temp, sensor);
 
-        getInstall(gpm(), cmd);
-        system(cmd);
-        
-        system("clear");
-        printf("Application downloaded successfully. Running the program...\n");
-        sleep(3);
+    return temp;
+} 
 
-        measureTemperature();
-        exit(0);
-    }
+char* getHighTemperature(char *sensor) {
+    char *highTemp = malloc(32 * sizeof(char));
 
-    fclose(fpath);
+    strtok(sensor, "=");
+    strcpy(highTemp, strtok(NULL, ""));
+    strtok(highTemp, ",");
+
+    return highTemp;
 }
 
+char* getCritTemperature(char *sensor) {
+    char *critTemp = malloc(32 * sizeof(char));
+
+    strtok(sensor, "=");
+    strcpy(critTemp, strtok(NULL, ""));
+
+    strtok(critTemp, "=");
+    strcpy(critTemp, strtok(NULL, ""));
+
+    strtok(critTemp, ")");
+
+    return critTemp;
+}
