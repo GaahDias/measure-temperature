@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-char* measureTemperature();
+int main();
 
 void getInstall(char * pm, char * str) {
     char install[50];
@@ -59,7 +59,7 @@ void installSensors(FILE *fpath) {
         printf("Application downloaded successfully. Running the program...\n");
         sleep(3);
 
-        measureTemperature();
+        main();
         exit(0);
     }
 
