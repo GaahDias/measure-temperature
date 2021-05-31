@@ -6,12 +6,12 @@
 #include "include/colors.h"
 
 char* measureTemperature();
-char* getTemperature(char *sensor);
-char* getHighTemperature(char *sensor);
-char* getCritTemperature(char *sensor);
+int getTemperature(char *sensor);
+int getHighTemperature(char *sensor);
+int getCritTemperature(char *sensor);
 
 int main() {
-    printf("CPU Temperature:%s", getTemperature(measureTemperature()));
+    printf("CPU Temperature: %d.0°C", getTemperature(measureTemperature()));
     
     return 0;
 }
@@ -62,19 +62,23 @@ char* measureTemperature() {
     return temp;
 }
 
-char* getTemperature(char *sensor) {
+int getTemperature(char *sensor) {
     char *temp = malloc(48 * sizeof(char));
+    int tempValue;
 
     strtok(sensor, "(");
     strcpy(temp, sensor);
 
     free(sensor);
 
-    return temp;
+    tempValue = atoi(temp);
+
+    return tempValue;
 } 
 
-char* getHighTemperature(char *sensor) {
+int getHighTemperature(char *sensor) {
     char *highTemp = malloc(48 * sizeof(char));
+    int highTempValue;
 
     strtok(sensor, "=");
     strcpy(highTemp, strtok(NULL, ""));
@@ -83,11 +87,14 @@ char* getHighTemperature(char *sensor) {
 
     strtok(highTemp, ",");
 
-    return highTemp;
+    highTempValue = atoi(highTemp);
+
+    return highTempValue;
 }
 
-char* getCritTemperature(char *sensor) {
+int getCritTemperature(char *sensor) {
     char *critTemp = malloc(48 * sizeof(char));
+    int critTempValue;
 
     strtok(sensor, "=");
     strcpy(critTemp, strtok(NULL, ""));
@@ -97,7 +104,7 @@ char* getCritTemperature(char *sensor) {
     strtok(critTemp, "=");
     strcpy(critTemp, strtok(NULL, ""));
 
-    strtok(critTemp, ")");
+    critTempValue = atoi(critTemp);
 
-    return critTemp;
+    return critTempValue;
 }
