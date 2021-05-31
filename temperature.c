@@ -83,7 +83,9 @@ int* getTemperatures(char *sensor) {
 
     strcpy(critTemp, sensor);
     strtok(critTemp, "=");
+    strcpy(critTemp, strtok(NULL, ""));
     strtok(critTemp, "=");
+    strcpy(critTemp, strtok(NULL, ""));
 
     critTempValue = atoi(critTemp);
     tempValues[2] = critTempValue;

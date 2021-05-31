@@ -19,7 +19,7 @@ int main() {
         printf(BHYEL);
     }
 
-    printf("%d.0°C\n", allTemps[1]);
+    printf("%d.0°C\n", allTemps[0]);
     
     return 0;
 }
