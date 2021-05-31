@@ -11,7 +11,20 @@ int getHighTemperature(char *sensor);
 int getCritTemperature(char *sensor);
 
 int main() {
-    printf("CPU Temperature: %d.0°C", getTemperature(measureTemperature()));
+    int temp = getTemperature(measureTemperature());
+    int highTemp = getHighTemperature(measureTemperature());
+    int critTemp = getCritTemperature(measureTemperature());
+
+    printf("CPU Temperature: ");
+    printf(BHGRN);
+
+    if(temp >= critTemp) {
+        printf(BHRED);
+    } else if(temp >= highTemp && temp < critTemp) {
+        printf(BHYEL);
+    }
+
+    printf("%d.0°C\n", temp);
     
     return 0;
 }
@@ -31,7 +44,7 @@ char* measureTemperature() {
     //executing sensors, and treating string
     fp = popen("sensors", "r");
 
-    output = malloc(80 * sizeof(char));
+    output = malloc(64 * sizeof(char));
 
     while(fscanf(fp, "%s", output) == 1) {
         strcat(output, " ");
@@ -39,7 +52,7 @@ char* measureTemperature() {
         //start in Package
         if(strstr(output, "Package")) {
             flag = true;
-            temp = malloc(80 * sizeof(char));
+            temp = malloc(64 * sizeof(char));
         }
 
         if(flag == true) {
@@ -62,14 +75,13 @@ char* measureTemperature() {
     return temp;
 }
 
+
 int getTemperature(char *sensor) {
     char *temp = malloc(48 * sizeof(char));
     int tempValue;
 
     strtok(sensor, "(");
     strcpy(temp, sensor);
-
-    free(sensor);
 
     tempValue = atoi(temp);
 
@@ -82,8 +94,6 @@ int getHighTemperature(char *sensor) {
 
     strtok(sensor, "=");
     strcpy(highTemp, strtok(NULL, ""));
-
-    free(sensor);
 
     strtok(highTemp, ",");
 
@@ -98,8 +108,6 @@ int getCritTemperature(char *sensor) {
 
     strtok(sensor, "=");
     strcpy(critTemp, strtok(NULL, ""));
-
-    free(sensor);
 
     strtok(critTemp, "=");
     strcpy(critTemp, strtok(NULL, ""));
