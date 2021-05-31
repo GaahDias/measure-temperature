@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#ifndef terminal_temperatura_h
-#define terminal_temperatura_h
+#ifndef util_temperature_h
+#define util_temperature_h
 
 void getInstall(char * pm, char * str);
 char* getPackageManager();
