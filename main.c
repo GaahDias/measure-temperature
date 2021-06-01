@@ -20,6 +20,7 @@ int main() {
     }
 
     printf("%d.0°C\n", allTemps[0]);
+    free(allTemps);
     
     return 0;
 }

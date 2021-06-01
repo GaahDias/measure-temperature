@@ -64,6 +64,7 @@ int* getTemperatures(char *sensor) {
     strtok(temp, "(");
 
     tempValue = atoi(temp);
+    free(temp);
     tempValues[0] = tempValue;
 
     //high temperature
@@ -75,6 +76,7 @@ int* getTemperatures(char *sensor) {
     strcpy(highTemp, strtok(NULL, ""));
 
     highTempValue = atoi(highTemp);
+    free(highTemp);
     tempValues[1] = highTempValue;
 
     //critical temperature
@@ -88,6 +90,7 @@ int* getTemperatures(char *sensor) {
     strcpy(critTemp, strtok(NULL, ""));
 
     critTempValue = atoi(critTemp);
+    free(critTemp);
     tempValues[2] = critTempValue;
 
     return tempValues;
