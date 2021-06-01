@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 int main();
 
@@ -56,7 +57,7 @@ void installSensors(FILE *fpath) {
         
         system("clear");
         printf("Application downloaded successfully. Running the program...\n");
-        sleep(3);
+        sleep(2);
 
         main();
         exit(0);
@@ -64,9 +65,3 @@ void installSensors(FILE *fpath) {
 
     fclose(fpath);
 }
-
-#ifdef _WIN32
-void sleep(int seconds) {
-   Sleep(seconds * 1000);
-}
-#endif

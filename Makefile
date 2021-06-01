@@ -1,3 +1,3 @@
 CC=gcc
 all:
-	$(CC) *.c -o measure-temperature
+	$(CC) *.c -o main
