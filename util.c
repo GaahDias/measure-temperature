@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 int main();
 
@@ -66,8 +65,8 @@ void installSensors(FILE *fpath) {
     fclose(fpath);
 }
 
-void sleep(int sec) {
-    time_t end = time(NULL) + sec;
-
-    while(time(NULL) < end);
+#ifdef _WIN32
+void sleep(int seconds) {
+   Sleep(seconds * 1000);
 }
+#endif

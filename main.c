@@ -9,7 +9,7 @@
 int main() {
     int *allTemps = calloc(3, sizeof(int));
     allTemps = getTemperatures(measureTemperature());
-
+  
     printf("CPU Temperature: ");
     printf(BHGRN);
 
