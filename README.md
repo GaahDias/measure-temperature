@@ -8,11 +8,14 @@ Simple C Application to measure CPU temperature.
 
 
 
-Compiling the application
+## Compiling the application
 
+### Using make
+> make 
+### manually
 > gcc -o main *.c
 
-Running the app
+### Running the app
 
 > ./main
 
