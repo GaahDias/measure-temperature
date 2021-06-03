@@ -13,7 +13,7 @@ Simple C Application to measure CPU temperature.
 > make 
 #### Manually:
 
-> gcc -o main *.c
+> gcc -o main *.c `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0`
 
 
 
