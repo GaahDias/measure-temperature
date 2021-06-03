@@ -5,22 +5,54 @@
 #include "include/util.h"
 #include "include/colors.h"
 #include "include/temperature.h"
+#include <gtk/gtk.h>
 
-int main() {
-    int *allTemps = calloc(3, sizeof(int));
-    allTemps = getTemperatures(measureTemperature());
+void app_quit(GtkWidget *widget, gpointer data);
+void print_temperature(GtkLabel *cpu_temp);
 
-    printf("CPU Temperature: ");
-    printf(BHGRN);
+int main(int argc, char *argv[]) {
+    GtkWidget *window, *grid, *cpu_temp;
+    gtk_init(&argc, &argv);
 
-    if(allTemps[0] >= allTemps[2]) {
-        printf(BHRED);
-    } else if(allTemps[0] >= allTemps[1] && allTemps[0] < allTemps[2]) {
-        printf(BHYEL);
-    }
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    g_signal_connect(window, "destroy", G_CALLBACK(app_quit), NULL);
 
-    printf("%d.0°C\n", allTemps[0]);
-    free(allTemps);
-    
+    gtk_window_set_title(GTK_WINDOW(window), "Measure CPU Temperature");
+    gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
+
+    grid = gtk_grid_new();
+    gtk_container_add(GTK_CONTAINER(window), grid);
+
+    cpu_temp = gtk_label_new(NULL);
+    gtk_grid_attach(GTK_GRID(grid), cpu_temp, 0, 0, 1, 1);
+
+    gtk_widget_show_all(window);
+
+    print_temperature(GTK_LABEL(cpu_temp));
+
+    gtk_main();
+
     return 0;
+}
+
+void print_temperature(GtkLabel *cpu_temp) {
+    while(1){
+        int *allTemps = getTemperatures(measureTemperature());
+
+        char *currentTemp = malloc(8 * sizeof(char));
+        sprintf(currentTemp, "%d.0°C", allTemps[0]);
+        free(allTemps); 
+
+        gtk_label_set_text(GTK_LABEL(cpu_temp), currentTemp);     
+        free(currentTemp);
+
+        while(gtk_events_pending()) {
+            gtk_main_iteration();
+        }
+    }
+}
+
+void app_quit(GtkWidget *widget, gpointer data) {
+    exit(1);
+    gtk_main_quit();
 }
