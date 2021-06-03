@@ -6,12 +6,15 @@
 #include "include/colors.h"
 #include "include/temperature.h"
 #include <gtk/gtk.h>
+#include <pthread.h>
 
 void app_quit(GtkWidget *widget, gpointer data);
-void print_temperature(GtkLabel *cpu_temp);
+void *print_temperature();
+
+static GtkWidget *cpu_temp;
 
 int main(int argc, char *argv[]) {
-    GtkWidget *window, *grid, *cpu_temp;
+    GtkWidget *window, *grid;
     gtk_init(&argc, &argv);
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -28,24 +31,27 @@ int main(int argc, char *argv[]) {
 
     gtk_widget_show_all(window);
 
-    print_temperature(GTK_LABEL(cpu_temp));
+    pthread_t tempThread;
+    pthread_create(&tempThread, NULL, print_temperature, NULL);
+    pthread_join(tempThread, NULL);
 
     gtk_main();
 
     return 0;
 }
 
-void print_temperature(GtkLabel *cpu_temp) {
+void *print_temperature() {
     while(1){
-        int *allTemps = getTemperatures(measureTemperature());
+        char *sensor = measureTemperature();
+        int *allTemps = getTemperatures(sensor);
+        free(sensor);
 
         char *currentTemp = malloc(8 * sizeof(char));
         sprintf(currentTemp, "%d.0°C", allTemps[0]);
         free(allTemps); 
-
+        
         gtk_label_set_text(GTK_LABEL(cpu_temp), currentTemp);     
         free(currentTemp);
-
         while(gtk_events_pending()) {
             gtk_main_iteration();
         }
