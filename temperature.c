@@ -20,7 +20,7 @@ char* measureTemperature() {
     //executing sensors, and treating string
     fp = popen("sensors", "r");
 
-    output = malloc(64 * sizeof(char));
+    output = malloc(120 * sizeof(char));
 
     while(fscanf(fp, "%s", output) == 1) {
         strcat(output, " ");
@@ -28,7 +28,7 @@ char* measureTemperature() {
         //start in Package
         if(strstr(output, "Package")) {
             flag = true;
-            temp = malloc(64 * sizeof(char));
+            temp = malloc(120 * sizeof(char));
         }
 
         if(flag == true) {
@@ -57,7 +57,7 @@ int* getTemperatures(char *sensor) {
     int* tempValues = calloc(3, sizeof(int));
 
     //current temperature
-    char *temp = malloc(48 * sizeof(char));
+    char *temp = malloc(85 * sizeof(char));
     int tempValue;
 
     strcpy(temp, sensor);
@@ -68,7 +68,7 @@ int* getTemperatures(char *sensor) {
     tempValues[0] = tempValue;
 
     //high temperature
-    char *highTemp = malloc(48 * sizeof(char));
+    char *highTemp = malloc(85 * sizeof(char));
     int highTempValue;
 
     strcpy(highTemp, sensor);
@@ -80,7 +80,7 @@ int* getTemperatures(char *sensor) {
     tempValues[1] = highTempValue;
 
     //critical temperature
-    char *critTemp = malloc(48 * sizeof(char));
+    char *critTemp = malloc(85 * sizeof(char));
     int critTempValue;
 
     strcpy(critTemp, sensor);

@@ -20,8 +20,8 @@ int main(int argc, char *argv[]) {
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     g_signal_connect(window, "destroy", G_CALLBACK(app_quit), NULL);
 
-    gtk_window_set_title(GTK_WINDOW(window), "Measure CPU Temperature");
-    gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
+    gtk_window_set_title(GTK_WINDOW(window), "Measure Temperature");
+    gtk_window_set_default_size(GTK_WINDOW(window), 275, 125);
 
     grid = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(window), grid);
@@ -46,12 +46,13 @@ void *print_temperature() {
         int *allTemps = getTemperatures(sensor);
         free(sensor);
 
-        char *currentTemp = malloc(8 * sizeof(char));
-        sprintf(currentTemp, "%d.0°C", allTemps[0]);
+        char *currentTemp = malloc(60 * sizeof(char));
+        sprintf(currentTemp, "CPU Temperature: %d.0°C", allTemps[0]);
         free(allTemps); 
-        
+
         gtk_label_set_text(GTK_LABEL(cpu_temp), currentTemp);     
         free(currentTemp);
+
         while(gtk_events_pending()) {
             gtk_main_iteration();
         }
