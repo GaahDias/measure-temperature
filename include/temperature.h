@@ -2,6 +2,8 @@
 #define temperature_h
 
 char* measureTemperature();
-int* getTemperatures(char *sensor);
+char* getCurrentTemp(char *sensor);
+char* getHighTemp(char *sensor);
+char* getCriticalTemp(char *sensor);
 
 #endif
