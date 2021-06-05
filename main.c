@@ -55,9 +55,9 @@ void print_temp(GtkWidget *temperature) {
     char *sensor = measureTemperature();
     char *currentTemp = getCurrentTemp(sensor);
 
-    gtk_label_set_text(GTK_LABEL(temperature), currentTemp);
+    temp_color(temperature); 
 
-    temp_color(temperature);  
+    gtk_label_set_text(GTK_LABEL(temperature), currentTemp); 
 }
 
 //change the color depending on cpu temperature
