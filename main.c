@@ -69,14 +69,18 @@ void temp_color(GtkWidget *temperature) {
     int highTempValue = 70;
     int critTempValue = 90;
 
-    //switch to the css color classes
-    gtk_style_context_add_class(gtk_widget_get_style_context(temperature), "normal-temp");
+    //switch the css color classes
+    gtk_style_context_remove_class(gtk_widget_get_style_context(temperature), "normal-temp");
+    gtk_style_context_remove_class(gtk_widget_get_style_context(temperature), "high-temp");
+    gtk_style_context_remove_class(gtk_widget_get_style_context(temperature), "crit-temp");
 
     if(currentTempValue >= highTempValue && currentTempValue < critTempValue) {
         gtk_style_context_add_class(gtk_widget_get_style_context(temperature), "high-temp");
     }
     else if(currentTempValue >= critTempValue) {
         gtk_style_context_add_class(gtk_widget_get_style_context(temperature), "crit-temp");
+    } else {
+        gtk_style_context_add_class(gtk_widget_get_style_context(temperature), "normal-temp");
     }
 }
 
