@@ -20,7 +20,7 @@ char* measureTemperature() {
     //executing sensors, and treating string
     fp = popen("sensors", "r");
 
-    output = malloc(120 * sizeof(char));
+    output = (char *) malloc(120 * sizeof(char));
 
     while(fscanf(fp, "%s", output) == 1) {
         strcat(output, " ");
@@ -28,7 +28,7 @@ char* measureTemperature() {
         //start in Package
         if(strstr(output, "Package")) {
             flag = true;
-            temp = malloc(120 * sizeof(char));
+            temp = (char *) malloc(120 * sizeof(char));
         }
 
         if(flag == true) {
@@ -44,22 +44,20 @@ char* measureTemperature() {
     free(output);
 
     strtok(temp, ":");
-    strcpy(temp, strtok(NULL, ":\n"));
 
     pclose(fp);
 
-    return temp;
+    return strtok(NULL, ":");
 }
 
 //function that will be called in main.c to update the temperature
 char* getCurrentTemp(char *sensor) {
-    char *temp = malloc(85 * sizeof(char));
+    char *temp = (char *) malloc(85 * sizeof(char));
 
     strcpy(temp, sensor);
 
     strtok(temp, "(");
     strtok(temp, "+");
-    strcpy(temp, strtok(NULL, ""));
 
-    return temp;
+    return strtok(NULL, "+");
 }

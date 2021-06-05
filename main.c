@@ -54,7 +54,6 @@ int main(int argc, char *argv[]) {
 void print_temp(GtkWidget *temperature) {
     char *sensor = measureTemperature();
     char *currentTemp = getCurrentTemp(sensor);
-    free(sensor);
 
     gtk_label_set_text(GTK_LABEL(temperature), currentTemp);
 
@@ -65,13 +64,10 @@ void print_temp(GtkWidget *temperature) {
 void temp_color(GtkWidget *temperature) {
     char *sensor = measureTemperature();
     char *currentTemp = getCurrentTemp(sensor);
-    free(sensor);
 
     int currentTempValue = atoi(currentTemp);
     int highTempValue = 70;
     int critTempValue = 90;
-
-    free(currentTemp);
 
     //switch to the css color classes
     gtk_style_context_add_class(gtk_widget_get_style_context(temperature), "normal-temp");
@@ -105,5 +101,4 @@ void app_load_css() {
 //quit the application
 void app_quit(GtkWidget *widget, gpointer data) {
     exit(1);
-    gtk_main_quit();
 }
