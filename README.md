@@ -6,17 +6,15 @@ Simple C Application to measure CPU temperature.
 
 ## How to run the program (Linux):
 
-### Compiling the application:
+### First, be sure you have all dependencies: gcc (compiler), and gtk.
 
-#### Using Make:
+> sudo apt install build-essential manpages-dev
+>
+> sudo apt install libgtk-3-dev
 
-> make 
-#### Manually:
+### Compiling the application using Makefile:
 
-> gcc -o main *.c `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0`
-
-
-
+> make
 ### Running the app:
 
 > ./main

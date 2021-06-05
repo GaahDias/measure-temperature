@@ -6,14 +6,33 @@
 
 int main();
 
-void getInstall(char * pm, char * str) {
+//get the correct package manager
+char *getPackageManager() {
+    char *package[] = {"pamac", "apt", "pacman", "yum", "dnf"};
+
+    for (int i = 0; i < sizeof(package) / 8; i++) {
+        char path[50];
+
+        strcpy(path, "/usr/bin/");
+        strcat(path, package[i]);
+        FILE *p = fopen(path, "r");
+
+        if (p != NULL) {
+            fclose(p);
+            return package[i];
+        }
+    }
+}
+
+//command to install lm-sensors
+void cmdInstall(char *pm, char *str) {
     char install[50];
 
     strcpy(install, "sudo ");
 
     strcat(install, pm);
 
-    if(!strcmp(pm, "pacman")) {
+    if (!strcmp(pm, "pacman")) {
         strcat(install, " -S lm-sensors");
     } else {
         strcat(install, " install lm-sensors");
@@ -22,29 +41,7 @@ void getInstall(char * pm, char * str) {
     strcpy(str, install);
 }
 
-char * getPackageManager() {
-  char * package[] = {
-    "pamac",
-    "apt",
-    "pacman",
-    "yum",
-    "dnf" 
-  };
-
-  for (int i = 0; i < sizeof(package) / 8; i++) {
-    char path[50];
-
-    strcpy(path, "/usr/bin/");
-    strcat(path, package[i]);
-    FILE * p = fopen(path, "r");
-
-    if (p != NULL) {
-      fclose(p);
-      return package[i];
-    }
-  }
-}
-
+//call the two functions
 void installSensors(FILE *fpath) {
     fpath = fopen("/usr/bin/sensors", "r");
 
@@ -52,7 +49,7 @@ void installSensors(FILE *fpath) {
         char cmd[50];
         printf("Command failed. Downloading lm-sensors.\n");
 
-        getInstall(getPackageManager(), cmd);
+        cmdInstall(getPackageManager(), cmd);
         system(cmd);
         
         system("clear");
@@ -60,7 +57,7 @@ void installSensors(FILE *fpath) {
         sleep(2);
 
         main();
-        exit(0);
+        exit(1);
     }
 
     fclose(fpath);

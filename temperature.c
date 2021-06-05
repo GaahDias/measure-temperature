@@ -5,7 +5,7 @@
 
 void installSensors(FILE *fpath);
 
-//function to get the temperature (temp, high, crit) from lm-sensors. basically string treatment
+//function to get the only the cpu temperature from lm-sensors. basically string treatment
 char* measureTemperature() {
     //declaring variables
     FILE *fp;
@@ -51,6 +51,7 @@ char* measureTemperature() {
     return temp;
 }
 
+//function that will be called in main.c to update the temperature
 char* getCurrentTemp(char *sensor) {
     char *temp = malloc(85 * sizeof(char));
 
@@ -61,34 +62,4 @@ char* getCurrentTemp(char *sensor) {
     strcpy(temp, strtok(NULL, ""));
 
     return temp;
-}
-
-char* getHighTemp(char *sensor) {
-    char *highTemp = malloc(85 * sizeof(char));
-
-    strcpy(highTemp, sensor);
-
-    strtok(highTemp, "=");
-    strcpy(highTemp, strtok(NULL, ""));
-    strtok(highTemp, ",");
-    strtok(highTemp, "+");
-    strcpy(highTemp, strtok(NULL, ""));
-
-    return highTemp;
-}
-
-char* getCriticalTemp(char *sensor) {
-    char *critTemp = malloc(85 * sizeof(char));
-
-    strcpy(critTemp, sensor);
-
-    strtok(critTemp, "=");
-    strcpy(critTemp, strtok(NULL, ""));
-    strtok(critTemp, "=");
-    strcpy(critTemp, strtok(NULL, ""));
-    strtok(critTemp, ")");
-    strtok(critTemp, "+");
-    strcpy(critTemp, strtok(NULL, ""));
-
-    return critTemp;
 }

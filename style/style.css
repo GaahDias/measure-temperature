@@ -1,0 +1,16 @@
+label {
+    padding-top: 35px;
+    padding-left: 15px;
+}
+
+.normal-temp {
+    color: rgb(111, 204, 58);
+}
+
+.high-temp {
+    color:rgb(209, 146, 28)
+}
+
+.crit-temp {
+    color:rgb(224, 51, 28)
+}
