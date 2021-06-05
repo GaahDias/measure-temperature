@@ -9,6 +9,6 @@
 
 void cmdInstall(char * pm, char * str);
 char* getPackageManager();
-void installSensors(FILE *fpath);
+void installSensors();
 
 #endif

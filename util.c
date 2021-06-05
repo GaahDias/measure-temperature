@@ -42,7 +42,8 @@ void cmdInstall(char *pm, char *str) {
 }
 
 //call the two functions
-void installSensors(FILE *fpath) {
+void installSensors() {
+    FILE *fpath;
     fpath = fopen("/usr/bin/sensors", "r");
 
     if(fpath == NULL) {

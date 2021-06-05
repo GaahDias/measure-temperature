@@ -3,19 +3,18 @@
 #include <string.h>
 #include <stdbool.h>
 
-void installSensors(FILE *fpath);
+void installSensors();
 
 //function to get the only the cpu temperature from lm-sensors. basically string treatment
 char* measureTemperature() {
     //declaring variables
     FILE *fp;
-    FILE *fpath;
     char *output;
     char *temp;
     bool flag = false;
 
     //calling installSensors function (util.c)
-    installSensors(fpath);
+    installSensors();
 
     //executing sensors, and treating string
     fp = popen("sensors", "r");
