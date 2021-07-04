@@ -5,7 +5,7 @@
 #include "include/util.h"
 #include "include/temperature.h"
 #include <gtk/gtk.h>
-
+#include "include/macros.h"
 void print_temp(GtkWidget *temperature);
 void temp_color(GtkWidget *temperature);
 void app_load_css();
@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
 
 //update the current_temp_label
 void print_temp(GtkWidget *temperature) {
+    message("Updating temperature\n");
     char *sensor = measureTemperature();
     char *currentTemp = getCurrentTemp(sensor);
 
@@ -62,6 +63,7 @@ void print_temp(GtkWidget *temperature) {
 
 //change the color depending on cpu temperature
 void temp_color(GtkWidget *temperature) {
+
     char *sensor = measureTemperature();
     char *currentTemp = getCurrentTemp(sensor);
 
