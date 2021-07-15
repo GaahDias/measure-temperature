@@ -17,5 +17,5 @@ Simple C Application to measure CPU temperature.
 > make
 ### Running the app:
 
-> ./main
+> ./measure-temperature
 
